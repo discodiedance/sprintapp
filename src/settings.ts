@@ -219,8 +219,11 @@ app.put(
         field: "availableResolutions",
       });
     }
-    if (typeof canBeDownloaded == "undefined") {
-      canBeDownloaded = false;
+    if (!canBeDownloaded || typeof canBeDownloaded !== "boolean") {
+      errors.errorsMessages.push({
+        message: "Invalid availableResolutions",
+        field: "availableResolutions",
+      });
     }
 
     if (
@@ -274,7 +277,7 @@ app.put(
   }
 );
 
-app.delete("/еуыештп/all-data", (req: Request, res: Response) => {
+app.delete("/testing/all-data", (req: Request, res: Response) => {
   videos.length = 0;
   res.sendStatus(204);
 });
