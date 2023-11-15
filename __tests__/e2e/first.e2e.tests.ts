@@ -123,21 +123,20 @@ describe("/videos", () => {
       availableResolutions: ["P144"],
     });
   });
-  it("Put status 400 and not updated video with uncorrect title and author", async () => {
+  it("Put status 400 and not updated video with uncorrect data", async () => {
     const result = await request(app)
       .put("/videos/" + video.id)
       .send({
         title: 123,
         author: 321,
+        canBeDownLoaded: "no",
       });
     expect(result.status).toBe(400);
     expect(result.body).toEqual({
       errorsMessages: [
-        {
-          message: expect.any(String),
-          field: "title",
-        },
+        { message: expect.any(String), field: "title" },
         { message: expect.any(String), field: "author" },
+        { message: expect.any(Boolean), field: "canBeDownLoaded" },
       ],
     });
   });
