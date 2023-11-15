@@ -4,7 +4,7 @@ describe("/videos", () => {
   let video: VideoType;
 
   beforeAll(async () => {
-    await request(app).delete("testing/all-data");
+    await request(app).delete("/testing/all-data");
   });
   it("Get status 200 and found empty videos array", async () => {
     await request(app).get("/videos").expect(200, []);
@@ -31,7 +31,11 @@ describe("/videos", () => {
   it("Post status 201 and create 1 correct title and author", async () => {
     const result = await request(app)
       .post("/videos/")
-      .send({ title: "hello", author: "world" });
+      .send({
+        title: "hello",
+        author: "world",
+        availableResolutions: ["P144"],
+      });
     expect(result.status).toBe(201);
     video = result.body;
     expect(result.body).toEqual({
@@ -70,7 +74,11 @@ describe("/videos", () => {
   it("Post status 201 and created 1 video by id", async () => {
     const result = await request(app)
       .post("/videos/")
-      .send({ title: "hello", author: "world" });
+      .send({
+        title: "hello",
+        author: "world",
+        availableResolutions: ["P1080"],
+      });
     video = result.body;
 
     expect(result.status).toBe(201);
@@ -137,7 +145,7 @@ describe("/videos", () => {
       errorsMessages: [
         { message: expect.any(String), field: "title" },
         { message: expect.any(String), field: "author" },
-        { message: expect.any(String), field: "canBeDownLoaded" },
+        { message: expect.any(String), field: "canBeDownloaded" },
       ],
     });
   });

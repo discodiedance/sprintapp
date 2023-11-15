@@ -221,8 +221,8 @@ app.put(
     }
     if (!canBeDownloaded || typeof canBeDownloaded !== "boolean") {
       errors.errorsMessages.push({
-        message: "Invalid availableResolutions",
-        field: "availableResolutions",
+        message: "Invalid canBeDownloaded",
+        field: "canBeDownloaded",
       });
     }
 
