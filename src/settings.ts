@@ -250,7 +250,7 @@ app.put(
   }
 );
 
-app.delete("/all-data", (req: Request, res: Response) => {
+app.delete("/testing/all-data", (req: Request, res: Response) => {
   videos.length = 0;
   res.sendStatus(204);
 });

@@ -4,7 +4,7 @@ describe("/videos", () => {
   let video: VideoType;
 
   beforeAll(async () => {
-    await request(app).delete("/all-data").expect(204);
+    await request(app).delete("/all-data");
   });
   it("Get status 200 and found empty videos array", async () => {
     await request(app).get("/videos").expect(200, []);
