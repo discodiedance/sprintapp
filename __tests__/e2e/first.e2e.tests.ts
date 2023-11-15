@@ -12,10 +12,10 @@ describe("/videos", () => {
   it("Get status 404 and not found 1 video by id", async () => {
     await request(app).get("/videos/143424234246").expect(404);
   });
-  it("Post status 400 and not created 1 video with uncorrect title and author", async () => {
+  it("Post status 400 and not created 1 video with uncorrect data", async () => {
     const result = await request(app)
       .post("/videos/")
-      .send({ title: 123, author: 321 });
+      .send({ title: 123, author: 321, availableResolutions: 123 });
     expect(result.status).toBe(400);
     expect(result.body).toEqual({
       errorsMessages: [
@@ -24,6 +24,7 @@ describe("/videos", () => {
           field: "title",
         },
         { message: expect.any(String), field: "author" },
+        { message: expect.any(Array), field: "availableResolutions" },
       ],
     });
   });
