@@ -197,17 +197,17 @@ app.put(
         field: "author",
       });
     }
-    if (Array.isArray(availableResolutions)) {
-      availableResolutions.map((r) => {
-        !availableResolutions.includes(r) &&
-          errors.errorsMessages.push({
-            message: "Invalid availableResolutions",
-            field: "availableResolutions",
-          });
-      });
-    } else {
-      availableResolutions = [];
-    }
+    // if (Array.isArray(availableResolutions)) {
+    //   availableResolutions.map((r) => {
+    //     !availableResolutions.includes(r) &&
+    //       errors.errorsMessages.push({
+    //         message: "Invalid availableResolutions",
+    //         field: "availableResolutions",
+    //       });
+    //   });
+    // } else {
+    //   availableResolutions = [];
+    // }
     if (
       !availableResolutions ||
       !Array.isArray(availableResolutions) ||
@@ -238,6 +238,17 @@ app.put(
           }));
     } else {
       minAgeRestriction = null;
+    }
+
+    if (
+      !publicationDate ||
+      typeof publicationDate !== "string"
+      // publicationDate < new Date().toISOString()
+    ) {
+      errors.errorsMessages.push({
+        message: "Invalid publicationDate",
+        field: "publicationDate",
+      });
     }
     if (errors.errorsMessages.length) {
       res.status(400).send(errors);

@@ -142,11 +142,12 @@ describe("/videos", () => {
       });
     expect(result.status).toBe(400);
     expect(result.body).toEqual({
-      errorsMessages: [
+      errorsMessages: expect.arrayContaining([
         { message: expect.any(String), field: "title" },
         { message: expect.any(String), field: "author" },
         { message: expect.any(String), field: "canBeDownloaded" },
-      ],
+        { message: expect.any(String), field: "publicationDate" },
+      ]),
     });
   });
   it("Delete status 204 and delete 1 video by id", async () => {
