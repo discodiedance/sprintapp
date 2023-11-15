@@ -24,7 +24,7 @@ describe("/videos", () => {
           field: "title",
         },
         { message: expect.any(String), field: "author" },
-        { message: expect.any(Array), field: "availableResolutions" },
+        { message: expect.any(String), field: "availableResolutions" },
       ],
     });
   });
@@ -137,7 +137,7 @@ describe("/videos", () => {
       errorsMessages: [
         { message: expect.any(String), field: "title" },
         { message: expect.any(String), field: "author" },
-        { message: expect.any(Boolean), field: "canBeDownLoaded" },
+        { message: expect.any(String), field: "canBeDownLoaded" },
       ],
     });
   });

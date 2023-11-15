@@ -13,7 +13,7 @@ type RequestWithBodyAndParams<P, B> = Request<P, {}, B, {}>;
 type CreateVideoDto = {
   title: string;
   author: string;
-  availableResolutions: typeof availableResolutions;
+  availableResolutions: typeof AvailableResolutions;
 };
 
 type ErrorType = {
@@ -25,7 +25,7 @@ type ErorMessageType = {
   message: string;
 };
 
-const availableResolutions = [
+const AvailableResolutions = [
   "P144",
   "P240",
   "P360",
@@ -44,7 +44,7 @@ export type VideoType = {
   minAgeRestriction: number | null;
   createdAt: string;
   publicationDate: string;
-  availableResolutions: typeof availableResolutions;
+  availableResolutions: typeof AvailableResolutions;
 };
 
 const videos: VideoType[] = [
@@ -98,16 +98,29 @@ app.post("/videos", (req: RequestWithBody<CreateVideoDto>, res: Response) => {
   } else if (author.trim().length < 1 || author.trim().length > 20) {
     errors.errorsMessages.push({ message: "Invalid author", field: "author" });
   }
-  if (Array.isArray(availableResolutions)) {
-    availableResolutions.map((r) => {
-      !availableResolutions.includes(r) &&
-        errors.errorsMessages.push({
-          message: "Invalid availableResolutions",
-          field: "availableResolutions",
-        });
+  // if (Array.isArray(availableResolutions)) {
+  //   availableResolutions.map((r) => {
+  //     !availableResolutions.includes(r) &&
+  //       errors.errorsMessages.push({
+  //         message: "Invalid availableResolutions",
+  //         field: "availableResolutions",
+  //       });
+  //   });
+  // }
+  // else {
+  //   availableResolutions = [];
+  // }
+
+  if (
+    !availableResolutions ||
+    !Array.isArray(availableResolutions) ||
+    availableResolutions.length > AvailableResolutions.length ||
+    !availableResolutions.every((el) => AvailableResolutions.includes(el))
+  ) {
+    errors.errorsMessages.push({
+      message: "Invalid availableResolutions",
+      field: "availableResolutions",
     });
-  } else {
-    availableResolutions = [];
   }
 
   if (errors.errorsMessages.length) {
@@ -140,7 +153,7 @@ type UpdateVideoDto = {
   id: number;
   title: string;
   author: string;
-  availableResolutions: typeof availableResolutions;
+  availableResolutions: typeof AvailableResolutions;
   canBeDownloaded: boolean;
   minAgeRestriction: number | null;
   publicationDate: string;
@@ -194,6 +207,17 @@ app.put(
       });
     } else {
       availableResolutions = [];
+    }
+    if (
+      !availableResolutions ||
+      !Array.isArray(availableResolutions) ||
+      availableResolutions.length > AvailableResolutions.length ||
+      !availableResolutions.every((el) => AvailableResolutions.includes(el))
+    ) {
+      errors.errorsMessages.push({
+        message: "Invalid availableResolutions",
+        field: "availableResolutions",
+      });
     }
     if (typeof canBeDownloaded == "undefined") {
       canBeDownloaded = false;
@@ -250,7 +274,7 @@ app.put(
   }
 );
 
-app.delete("/testing/all-data", (req: Request, res: Response) => {
+app.delete("/еуыештп/all-data", (req: Request, res: Response) => {
   videos.length = 0;
   res.sendStatus(204);
 });
